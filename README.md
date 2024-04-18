@@ -1,0 +1,1 @@
+# Autoplaywright Demo project
