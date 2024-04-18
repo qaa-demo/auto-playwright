@@ -7,18 +7,18 @@ const formPageUrl = baseUrl + '/form.php'
 
 const options = {
   // If true, debugging information is printed in the console.
-  debug: false,
+  debug: true,
   // The OpenAI model (https://platform.openai.com/docs/models/overview)
   model: "gpt-3.5-turbo",
   // The OpenAI API key
-  openaiApiKey: '', // populate the OpenAI API key value
+  openaiApiKey: '', // populate with your OpenAI API key
 };
 
 test("auto Playwright example - Guestbook App", async ({ page }) => {
 
   await page.goto(baseUrl);
 
-  await auto("Click on the 'LOGIN' menu item", { page, test }, options, { debug: true })
+  await auto("Click on the 'LOGIN' menu item", { page, test }, options)
 
   await page.waitForURL(loginPageUrl)
 
@@ -28,7 +28,9 @@ test("auto Playwright example - Guestbook App", async ({ page }) => {
 
   await page.waitForURL(formPageUrl)
 
-  await auto("Fill out 'name', 'email' and 'comment' fields only with realistic random values", { page, test }, options)
+  await auto("Fill out 'name' field  with a realistic random value", { page, test }, options)
+  await auto("Fill out 'email' field  with a realistic random value", { page, test }, options)
+  await auto("Fill out 'comment' field  with a realistic random value", { page, test }, options)
 
   await auto("Submit the 'Submit' button", { page, test }, options)
 
@@ -38,7 +40,9 @@ test("auto Playwright example - Guestbook App", async ({ page }) => {
 
   await page.waitForURL("https://testautomationpro.com/aut/index.php#guestbook")
 
-  await auto('validate if the above filled realistic values exist on the page', { page, test }, options)
+  await auto("Validate page title says 'Guesbook' ", { page, test }, options)
+  await auto('Name entered during registratin is on the page', { page, test }, options)
 
+await auto("Click on the 'LOGOUT DEMOUSER' menu item", { page, test }, options)
   
 });
