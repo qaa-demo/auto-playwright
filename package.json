@@ -1,5 +1,5 @@
 {
-  "name": "auto-playwright-demo",
+  "name": "genai-playwright-demo",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -11,7 +11,14 @@
   "license": "ISC",
   "devDependencies": {
     "@playwright/test": "^1.43.1",
-    "@types/node": "^20.12.7",
-    "auto-playwright": "^1.14.0"
+    "@types/node": "^20.12.7"
+  },
+  "dependencies": {
+    "@azure/core-auth": "^1.7.2",
+    "@azure/identity": "^4.1.0",
+    "@azure/openai": "^1.0.0-beta.12",
+    "@azure/openai-assistants": "^1.0.0-beta.5",
+    "dayjs": "^1.11.10",
+    "dotenv": "^16.4.5"
   }
 }

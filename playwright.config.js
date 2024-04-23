@@ -18,13 +18,14 @@ module.exports = defineConfig({
 
   /* Reporter to use. See https://playwright.dev/docs/test-reporters 
   Set to:'never', change to 'always' to launch report automatically after execution */
-  reporter: [ 
+  reporter: [
     ['html', { open: 'never' }],
   ],
-  
+
   use: {
     /* Maximum time each action such as `click()` can take. 
         Defaults to 0 (no limit). */
+    timeout: 5 * 60 * 1000,
     actionTimeout: 60 * 10000,
     navigationTimeout: 30 * 10000,
 
@@ -38,10 +39,10 @@ module.exports = defineConfig({
     headless: false,
     viewport: { width: 1900, height: 940 },
     launchOptions: {
-        slowMo: 300,
+      slowMo: 300,
     },
   },
-  
+
   /* Configure projects for major browsers */
   projects: [
     {

@@ -5,3 +5,4 @@ node_modules/
 /playwright/.cache/
 tests-examples/
 /_bkp/
+/tests-bkp/
