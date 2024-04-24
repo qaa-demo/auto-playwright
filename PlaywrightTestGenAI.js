@@ -37,7 +37,7 @@ const messages = [
     {
         role: "user",
         content: `
-            Generate Playwright Test 2 for login functionality. 
+            Generate Playwright Test 2 to test login functionality. 
             Test steps: 
             - Navigate to the login page https://the-internet.herokuapp.com/login
             - Fill in the username and password fields
@@ -51,7 +51,7 @@ const messages = [
     {
         role: "user",
         content: `
-            Generate Playwright Test 3 for login functionality. 
+            Generate Playwright Test 3 to test login functionality. 
             Test steps: 
             - Navigate to https://testautomationpro.com/aut/
             - Click Login menu item to navigate to Login Form
