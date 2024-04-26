@@ -25,7 +25,7 @@ module.exports = defineConfig({
   use: {
     /* Maximum time each action such as `click()` can take. 
         Defaults to 0 (no limit). */
-    timeout: 5 * 60 * 1000,
+    timeout: 60 * 10000,
     actionTimeout: 60 * 10000,
     navigationTimeout: 30 * 10000,
 
