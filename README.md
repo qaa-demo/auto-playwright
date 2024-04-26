@@ -34,7 +34,7 @@ Generate Playwright Tests :performing_arts: using  Azure OpenAI
 - Open project in VSCode
 - Run `npm install` command
 
-- Run project with the command: `node.js PlaywrightTestGenAI.js`
+- Run project with the command: `node PlaywrightTestGenAI.js`
 - View Console for execution log
 
 - to View test results run the command: `npx playwright show-report`
