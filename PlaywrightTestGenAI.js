@@ -27,7 +27,7 @@ const messages = [
             Test steps: 
             - Navigate to Google Home page
             - Enter a search term in a search field
-            - Use locator textarea[name=q] and submit the search
+            - For search box, use locator textarea[name=q] and submit the search
             - Validate search results page title
             - Click the first result and log the URL and title of the page that opens to console
             Use search Term: 'Playwright Automated Testing'. 
@@ -54,14 +54,14 @@ const messages = [
             Generate Playwright Test 3 to test login functionality. 
             Test steps: 
             - Navigate to https://testautomationpro.com/aut/
-            - Click Login menu item to navigate to Login Form
+            - Click 'Login' menu item to navigate to Login Form
             - Log the Page Title and Page Url
             - Fill in the username and password fields and click Login button
             - Use username 'Demouser' and password 'Demopass'.
             - Use locators input[name="username"], input[name="password"], input[name="Submit"]
             - Validate that the user is redirected to form page that has h2 title 'Sign The Guestbook'
             - Log the Page Title and Page Url
-            - Click Logout Demouser menu item
+            - Click 'Logout Demouser' menu item
             - Validate page has h1 title Guestbook Demo
             - Log the Page Title and Page Url
         `
@@ -73,7 +73,23 @@ async function main() {
     console.log("-= Chat Completions Sample =-");
 
     const client = new OpenAIClient(endpoint, new AzureKeyCredential(azureApiKey));
-    const result = await client.getChatCompletions(deploymentId, messages);
+    let result;
+    let startTime;
+
+    // Wait for result
+    const dotsInterval = setInterval(() => process.stdout.write('~*'), 1000);
+
+    try {
+        startTime = Date.now(); // Capture the start time
+        result = await client.getChatCompletions(deploymentId, messages);
+    } catch (error) {
+        console.error("Error getting chat completions:", error);
+    } finally {
+        clearInterval(dotsInterval); // Stop displaying dots
+    }
+    const endTime = Date.now();
+    const duration = (endTime - startTime) / 1000; // Calculate duration in seconds
+    console.log(`\nServer response received in ${duration} seconds`);
 
     let contentToSave = ""; 
 
@@ -83,6 +99,7 @@ async function main() {
         const filteredLines = lines.filter(line => !line.includes('```')); // filter any markdown 
         contentToSave += filteredLines.join('\n') + "\n"; // Append the content
     }
+    
     
     console.log(contentToSave);
 

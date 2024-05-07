@@ -29,11 +29,12 @@ AZURE_OPENAI_DEPLOYMENT_NAME
 ```
 ![image.png](/img/genai-playwright-demo01.png)
 
-- Clone [genai-playwright-demo repo](https://github.com/qaa-demo/genai-playwright-demo) to your local machine
-- Open `genai-playwright-demo` project in VSCode
-- Run `npm install` command in a Terminal Window
+- Clone this repo to your local machine
+- Open the repo project in VSCode, open new Terminal Window
+- Run `npm install` command to install dependancies
+- Run `npm i --save-dev @playwright/test` command to install latest version of Playwright
 - Run project with the command: `node PlaywrightTestGenAI.js`
-- View Console for execution log, wait for completion, it may take a few minutes
+- View Console for execution log, wait for completion, it may take a few seconds (up to a minute)
 - Playwright test will launch automatically
 - Once completed, view Playwright test results by running the command: `npx playwright show-report`
 
@@ -44,5 +45,8 @@ Good luck! 🚀 🤞
 - Any previously generated files starting with **genai-test** will be backed up in `/tests-bkp` folder
 - Each run generates new test file and backs up the previous file to `/tests-bkp` folder
 
-### Repo
-https://github.com/qaa-demo/genai-playwright-demo
+## ZeroStep Demo
+- Register Account and Obtain ZeroStep API Key (token) at https://zerostep.com/
+- Set `$ export ZEROSTEP_TOKEN="<your token here>"` or save in System Environment Variables
+- Run ZeroStep based test via the command `npm test ZeroStep-test.spec.js`
+- Once completed, view Playwright test results by running the command: `npx playwright show-report`
