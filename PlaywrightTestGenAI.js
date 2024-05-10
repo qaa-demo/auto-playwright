@@ -4,13 +4,12 @@ const { OpenAIClient, AzureKeyCredential } = require("@azure/openai");
 const { endpoint, azureApiKey, deploymentId } = require('./oai.config');
 const dayjs = require('dayjs');
 const { exec } = require('child_process');
-
 const fs = require('fs').promises;
 const path = require('path');
 
 const messages = [
-    { role: "system", content: "You are a helpful assistant to help QA Automation Engineers generate Playwright tests based on provided test descriptions. Here are the rules: Assume Node.js and Plawright are already installed and Playwright project is created. Your goal is to generate Playwright Test code only, based on provided test steps, expected results and input data. You will generate Plawright Tests in JavaScript. You will use page.fill() method to enter values, you will use page.waitForLoadState('networkidle') to wait for step completion after submit. You are forbidden to use page.waitForNavigation() method! Start each test code with the console.log statement Test Run Start and current local date and time.  IMPORTANT: Do not add any instructions, assumptions, prerequisites, annotations or explanations of any kind to your response! Generate only Playwright Test Code. Add test steps as commented lines to the code. In your response provide code only. Never include any Markdown formatting such as language labels'```javascript' and triple ticks ```'. When generating multiple tests make sure there only one statement const { test, expect } = require('@playwright/test');" },
-    { role: "user", content: "Can you generate Playwright Test code using JavaScript?" },
+    { role: "system", content: "You are a helpful assistant to help QA Automation Engineers generate Playwright tests based on provided test steps. Here are the rules: Assume Node.js and Plawright are already installed and Playwright project is created. Your goal is to generate Playwright Test code only, based on provided test steps, expected results and input data. You will generate Plawright Tests in JavaScript. You will use page.fill() method to enter values, you will use page.waitForLoadState('networkidle') to wait for step completion after submit. You are forbidden to use page.waitForNavigation() method! Start each test code with the console.log statement Test Run Start and current local date and time. IMPORTANT: Do not add any instructions, assumptions, prerequisites, annotations or explanations of any kind to your response! Generate only Playwright Test code. Add test steps as commented lines to the code. In your response provide code only. Do not include markdown formatting such as language labels'```javascript' and triple ticks ```' in your response. When generating multiple tests make sure there only one statement const { test, expect } = require('@playwright/test');" },
+    { role: "user", content: "Generate Playwright Test" },
     {
         role: "assistant",
         content: `
@@ -27,11 +26,13 @@ const messages = [
             Test steps: 
             - Navigate to Google Home page
             - Enter a search term in a search field
-            - For search box, use locator textarea[name=q] and submit the search
+            - For search field, use locator textarea[name=q] and submit the search
             - Validate search results page title
-            - Click the first result and log the URL and title of the page that opens to console
-            Use search Term: 'Playwright Automated Testing'. 
-            Expected search result page title: 'Playwright Automated Testing - Google Search'.
+            - Use search Term: 'Playwright Automated Testing'. 
+            - Expected search result page title: 'Playwright Automated Testing - Google Search'.
+            - Click the first search result
+            - Log to console the URL and title of the page that opens 
+            
         `
     },
     {
@@ -76,8 +77,8 @@ async function main() {
     let result;
     let startTime;
 
-    // Wait for result
-    const dotsInterval = setInterval(() => process.stdout.write('~*'), 1000);
+    // Wait for result showing progress bar
+    const progressInterval = setInterval(() => process.stdout.write('.'), 1000);
 
     try {
         startTime = Date.now(); // Capture the start time
@@ -85,7 +86,7 @@ async function main() {
     } catch (error) {
         console.error("Error getting chat completions:", error);
     } finally {
-        clearInterval(dotsInterval); // Stop displaying dots
+        clearInterval(progressInterval); // Stop waiting
     }
     const endTime = Date.now();
     const duration = (endTime - startTime) / 1000; // Calculate duration in seconds
@@ -109,7 +110,8 @@ async function main() {
 
     await saveTestFile(fileName, contentToSave);
 
-    // Execute npm test after completing the main function
+    // Execute test after completing the main function
+
     exec('npm test ' + fileName, (error, stdout, stderr) => {
         if (error) {
             console.error(`Error executing npm test: ${error}`);
@@ -146,7 +148,7 @@ async function saveTestFile(fileName, contentToSave) {
         // Save the content to the specified file
         await fs.writeFile(path.join(directoryPath, fileName), contentToSave);
 
-        console.log('Files moved and saved successfully.');
+        console.log('Test Files backed up and saved successfully.');
     } catch (err) {
         console.error('Error moving and saving files:', err);
     }
