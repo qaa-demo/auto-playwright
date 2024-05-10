@@ -2,6 +2,20 @@
 
 Generate Playwright Tests 🎭 using Azure OpenAI
 
+## Description
+1. **Configure System Prompt**: Set up the system prompt to instruct the model to act as a Playwright Code Generator, providing the rules and expected output examples.
+
+2. **Configure User Prompt**: Define the user prompt to generate test steps.
+
+3. **Send Request**: Send the request to Azure OpenAI's GPT-4 model using the prompts to generate Playwright test code.
+
+4. **Parse Response**: Parse the response and save it as a Playwright test.
+
+5. **Trigger Test Execution**: Execute the test as a regular Playwright test.
+
+6. **View Results**: View the Playwright execution results using the `npx playwright show-report` command as usual.
+
+
 ## Prerequisites
 - Node.js
 - Visual Studio Code
