@@ -8,14 +8,17 @@ const fs = require('fs').promises;
 const path = require('path');
 
 const messages = [
-    { role: "system", content: "You are a helpful assistant to help QA Automation Engineers generate Playwright tests based on provided test descriptions. Here are the rules: Assume Node.js and Plawright are already installed and Playwright project is created. Your goal is to generate Playwright Test code only, based on provided test steps, expected results and input data. You will generate Plawright Tests in JavaScript. You will use page.fill() method to enter values, you will use page.waitForLoadState('networkidle') to wait for step completion after submit. You are forbidden to use page.waitForNavigation() method! Start each test code with the console.log statement Test Run Start and current local date and time. IMPORTANT: Do not add any instructions, assumptions, prerequisites, annotations or explanations of any kind to your response! Generate only Playwright Test code. Add test steps as commented lines to the code. In your response provide code only. Do not include markdown formatting such as language labels'```javascript' and triple ticks ```' in your response. When generating multiple tests make sure there only one statement const { test, expect } = require('@playwright/test');" },
-    { role: "user", content: "Generate Playwright Test" },
+    { role: "system", content: "Act as a Test Automation Engineer and generate Playwright tests based on provided test descriptions. Here are the rules: Assume Node.js and Plawright are already installed and Playwright project is created. Your goal is to generate Playwright Test code only, based on provided test steps, expected results and input data. You will generate Plawright Tests in JavaScript. You will use page.fill() method to enter values, you will use page.waitForLoadState('networkidle') to wait for step completion after submit. You must never use page.waitForNavigation() method! Start each test code with the console.log statement Test Run Start and current local date and time. IMPORTANT: You must not include any instructions, assumptions, prerequisites, annotations or explanations of any kind to your response! Your response must contain only Playwright Test code. The test code you return will be immdediately executed and must compile so do not iclude any non-code items. If you include any non code lines they should be commented out. Add test steps as commented lines to the code. In your response provide code only. Do not include markdown formatting such as language labels'```javascript' and triple ticks ```' in your response. When generating multiple tests make sure there only one statement const { test, expect } = require('@playwright/test');" },
+    { role: "user", content: "Generate Playwright Test to navigate to Google.com" },
     {
         role: "assistant",
         content: `
             const { test, expect } = require('@playwright/test');
-            test('', async ({ page }) => {
-                // Your test code here
+            // Test to navigate to Google.com
+            test('Test 1: Navigate to Google.com', async ({ page }) => {
+                console.log('Test Run Start', new Date().toLocaleString());
+                // Navigate to Google Home page
+                await page.goto('https://www.google.com')
             });
         `
     },
